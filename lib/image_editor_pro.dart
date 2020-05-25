@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image_editor_pro/modules/all_emojies.dart';
 import 'package:image_editor_pro/modules/bottombar_container.dart';
 import 'package:image_editor_pro/modules/colors_picker.dart';
@@ -33,7 +32,8 @@ SignatureController _controller =
 class ImageEditorPro extends StatefulWidget {
   final Color appBarColor;
   final Color bottomBarColor;
-  ImageEditorPro({this.appBarColor, this.bottomBarColor});
+  final File image;
+  ImageEditorPro({this.appBarColor, this.bottomBarColor, this.image});
 
   @override
   _ImageEditorProState createState() => _ImageEditorProState();
@@ -84,6 +84,7 @@ class _ImageEditorProState extends State<ImageEditorPro> {
 
   @override
   void initState() {
+    _image = widget.image;
     timers();
     _controller.clear();
     type.clear();
@@ -169,11 +170,11 @@ class _ImageEditorProState extends State<ImageEditorPro> {
                   _controller.points.clear();
                   setState(() {});
                 }),
-            new IconButton(
-                icon: Icon(Icons.camera),
-                onPressed: () {
-                  bottomsheets();
-                }),
+//            new IconButton(
+//                icon: Icon(Icons.camera),
+//                onPressed: () {
+//                  bottomsheets();
+//                }),
             new FlatButton(
                 child: new Text("Done"),
                 textColor: Colors.white,
@@ -405,100 +406,100 @@ class _ImageEditorProState extends State<ImageEditorPro> {
               ));
   }
 
-  void bottomsheets() {
-    openbottomsheet = true;
-    setState(() {});
-    Future<void> future = showModalBottomSheet<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return new Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(blurRadius: 10.9, color: Colors.grey[400])
-          ]),
-          height: 170,
-          child: new Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: new Text("Select Image Options"),
-              ),
-              Divider(
-                height: 1,
-              ),
-              new Container(
-                padding: EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              IconButton(
-                                  icon: Icon(Icons.photo_library),
-                                  onPressed: () async {
-                                    var image = await ImagePicker.pickImage(
-                                        source: ImageSource.gallery);
-                                    var decodedImage =
-                                        await decodeImageFromList(
-                                            image.readAsBytesSync());
-
-                                    setState(() {
-                                      height = decodedImage.height;
-                                      width = decodedImage.width;
-                                      _image = image;
-                                    });
-                                    setState(() => _controller.clear());
-                                    Navigator.pop(context);
-                                  }),
-                              SizedBox(width: 10),
-                              Text("Open Gallery")
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 24),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        child: Column(
-                          children: <Widget>[
-                            IconButton(
-                                icon: Icon(Icons.camera_alt),
-                                onPressed: () async {
-                                  var image = await ImagePicker.pickImage(
-                                      source: ImageSource.camera);
-                                  var decodedImage = await decodeImageFromList(
-                                      image.readAsBytesSync());
-
-                                  setState(() {
-                                    height = decodedImage.height;
-                                    width = decodedImage.width;
-                                    _image = image;
-                                  });
-                                  setState(() => _controller.clear());
-                                  Navigator.pop(context);
-                                }),
-                            SizedBox(width: 10),
-                            Text("Open Camera")
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    );
-    future.then((void value) => _closeModal(value));
-  }
+//  void bottomsheets() {
+//    openbottomsheet = true;
+//    setState(() {});
+//    Future<void> future = showModalBottomSheet<void>(
+//      context: context,
+//      builder: (BuildContext context) {
+//        return new Container(
+//          decoration: BoxDecoration(color: Colors.white, boxShadow: [
+//            BoxShadow(blurRadius: 10.9, color: Colors.grey[400])
+//          ]),
+//          height: 170,
+//          child: new Column(
+//            children: <Widget>[
+//              Padding(
+//                padding: const EdgeInsets.all(20.0),
+//                child: new Text("Select Image Options"),
+//              ),
+//              Divider(
+//                height: 1,
+//              ),
+//              new Container(
+//                padding: EdgeInsets.all(20),
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  crossAxisAlignment: CrossAxisAlignment.center,
+//                  children: <Widget>[
+//                    Container(
+//                      child: InkWell(
+//                        onTap: () {},
+//                        child: Container(
+//                          child: Column(
+//                            children: <Widget>[
+//                              IconButton(
+//                                  icon: Icon(Icons.photo_library),
+//                                  onPressed: () async {
+//                                    var image = await ImagePicker.pickImage(
+//                                        source: ImageSource.gallery);
+//                                    var decodedImage =
+//                                        await decodeImageFromList(
+//                                            image.readAsBytesSync());
+//
+//                                    setState(() {
+//                                      height = decodedImage.height;
+//                                      width = decodedImage.width;
+//                                      _image = image;
+//                                    });
+//                                    setState(() => _controller.clear());
+//                                    Navigator.pop(context);
+//                                  }),
+//                              SizedBox(width: 10),
+//                              Text("Open Gallery")
+//                            ],
+//                          ),
+//                        ),
+//                      ),
+//                    ),
+//                    SizedBox(width: 24),
+//                    InkWell(
+//                      onTap: () {},
+//                      child: Container(
+//                        child: Column(
+//                          children: <Widget>[
+//                            IconButton(
+//                                icon: Icon(Icons.camera_alt),
+//                                onPressed: () async {
+//                                  var image = await ImagePicker.pickImage(
+//                                      source: ImageSource.camera);
+//                                  var decodedImage = await decodeImageFromList(
+//                                      image.readAsBytesSync());
+//
+//                                  setState(() {
+//                                    height = decodedImage.height;
+//                                    width = decodedImage.width;
+//                                    _image = image;
+//                                  });
+//                                  setState(() => _controller.clear());
+//                                  Navigator.pop(context);
+//                                }),
+//                            SizedBox(width: 10),
+//                            Text("Open Camera")
+//                          ],
+//                        ),
+//                      ),
+//                    )
+//                  ],
+//                ),
+//              )
+//            ],
+//          ),
+//        );
+//      },
+//    );
+//    future.then((void value) => _closeModal(value));
+//  }
 
   void _closeModal(void value) {
     openbottomsheet = false;
