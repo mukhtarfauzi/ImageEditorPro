@@ -189,7 +189,7 @@ class _ImageEditorProState extends State<ImageEditorPro> {
                     setState(() {
                       _imageFile = image;
                     });
-                    final paths = await getExternalStorageDirectory();
+                    final paths = await getApplicationDocumentsDirectory();
                     image.copy(paths.path +
                         '/' +
                         DateTime.now().millisecondsSinceEpoch.toString() +
